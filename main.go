@@ -33,11 +33,10 @@ func travel() {
 	}
 }
 
-func getResponseToPrompt(prompt string) string {
-	var response string
+func getResponseToPrompt(prompt string) (response string) {
 	fmt.Println(prompt)
 	fmt.Scan(&response)
-	return response
+	return 
 }
 
 func travelToPlanet(planetName string) {
