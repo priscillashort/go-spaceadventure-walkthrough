@@ -51,6 +51,6 @@ func travelToPlanet(planetName string) {
 	
 	//This should actually lookup the planet name in the options
 	//and print the prompt that goes with the given planet
-	//But this solution is not complete
+	//But this solution is not complete 
 	fmt.Printf("Arrived at %s. The large red spot appears ominous.\n", planetName)
 }
