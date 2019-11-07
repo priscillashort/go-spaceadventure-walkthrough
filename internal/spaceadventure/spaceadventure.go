@@ -2,44 +2,53 @@ package spaceadventure
 
 import "fmt"
 
-func Start() {
-	PrintWelcome()
-	PrintGreeting(GetResponseToPrompt("What is your name?"))
+func Start(planetarySystem PlanetarySystem) {
+	printWelcome(planetarySystem)
+	printGreeting(responseToPrompt("What is your name?"))
 	fmt.Println("Let's go on an adventure!")
-	Travel()
+	travel(promptForRandomOrSpecificDestination("Shall I randomly choose a planet for you to visit? (Y or N)"))
 }
 
-func PrintWelcome() {
-	fmt.Println("Welcome to the Solar System!")
+func printWelcome(planetarySystem PlanetarySystem) {
+	fmt.Printf("Welcome to the %s!", planetarySystem.Name)
 	fmt.Println("There are 8 planets to explore.")
 }
 
-func GetResponseToPrompt(prompt string) (response string) {
+func responseToPrompt(prompt string) (response string) {
 	fmt.Println(prompt)
 	fmt.Scan(&response)
 	return 
 }
 
-func PrintGreeting(name string) {
+func printGreeting(name string) {
 	fmt.Printf("Nice to meet you, %s. My name is Eliza, I'm an old friend of Siri.\n", name)
 }
 
-func Travel() {
+
+func travel(randomDestination bool) {
+	if (randomDestination) {
+		travelToPlanet("")
+	} else {
+		travelToPlanet(responseToPrompt("Name the planet you would like to visit."))
+	}
+}
+
+func promptForRandomOrSpecificDestination(prompt string) bool {
 	var choice string
 	for choice != "Y" && choice != "N" {
-		choice = GetResponseToPrompt("Shall I randomly choose a planet for you to visit? (Y or N)")
+		choice = responseToPrompt(prompt)
 		if choice == "Y" {
-			TravelToPlanet("")
+			return true
 		} else if choice == "N" {
-			planetName := GetResponseToPrompt("Name the planet you would like to visit.")
-			TravelToPlanet(planetName)
+			return false
 		} else {
 			fmt.Println("Sorry, I didn't get that.")
 		}
 	}
+	return false
 }
 
-func TravelToPlanet(planetName string) {
+func travelToPlanet(planetName string) {
 	if planetName == "" {
 		//This should actually generate a random planet name 
 		//but the solution is not complete
