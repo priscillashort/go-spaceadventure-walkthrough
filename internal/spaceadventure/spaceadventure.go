@@ -1,45 +1,45 @@
-package main
+package spaceadventure
 
 import "fmt"
 
-func main() {
-	printWelcome()
-	printGreeting(getResponseToPrompt("What is your name?"))
+func Start() {
+	PrintWelcome()
+	PrintGreeting(GetResponseToPrompt("What is your name?"))
 	fmt.Println("Let's go on an adventure!")
-	travel()
+	Travel()
 }
 
-func printWelcome() {
+func PrintWelcome() {
 	fmt.Println("Welcome to the Solar System!")
 	fmt.Println("There are 8 planets to explore.")
 }
 
-func printGreeting(name string) {
+func GetResponseToPrompt(prompt string) (response string) {
+	fmt.Println(prompt)
+	fmt.Scan(&response)
+	return 
+}
+
+func PrintGreeting(name string) {
 	fmt.Printf("Nice to meet you, %s. My name is Eliza, I'm an old friend of Siri.\n", name)
 }
 
-func travel() {
+func Travel() {
 	var choice string
 	for choice != "Y" && choice != "N" {
-		choice = getResponseToPrompt("Shall I randomly choose a planet for you to visit? (Y or N)")
+		choice = GetResponseToPrompt("Shall I randomly choose a planet for you to visit? (Y or N)")
 		if choice == "Y" {
-			travelToPlanet("")
+			TravelToPlanet("")
 		} else if choice == "N" {
-			planetName := getResponseToPrompt("Name the planet you would like to visit.")
-			travelToPlanet(planetName)
+			planetName := GetResponseToPrompt("Name the planet you would like to visit.")
+			TravelToPlanet(planetName)
 		} else {
 			fmt.Println("Sorry, I didn't get that.")
 		}
 	}
 }
 
-func getResponseToPrompt(prompt string) (response string) {
-	fmt.Println(prompt)
-	fmt.Scan(&response)
-	return 
-}
-
-func travelToPlanet(planetName string) {
+func TravelToPlanet(planetName string) {
 	if planetName == "" {
 		//This should actually generate a random planet name 
 		//but the solution is not complete
