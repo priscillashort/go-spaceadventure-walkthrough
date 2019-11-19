@@ -1,16 +1,20 @@
 package spaceadventure
 
-import "fmt"
+import (
+	"fmt"
+	"math/rand"
+	"time"
+)
 
 func Start(planetarySystem PlanetarySystem) {
 	printWelcome(planetarySystem)
 	printGreeting(responseToPrompt("What is your name?"))
 	fmt.Println("Let's go on an adventure!")
-	travel(promptForRandomOrSpecificDestination("Shall I randomly choose a planet for you to visit? (Y or N)"))
+	travel(promptForRandomOrSpecificDestination("Shall I randomly choose a planet for you to visit? (Y or N)"), planetarySystem)
 }
 
 func printWelcome(planetarySystem PlanetarySystem) {
-	fmt.Printf("Welcome to the %s!", planetarySystem.Name)
+	fmt.Printf("Welcome to the %s!\n", planetarySystem.Name)
 	fmt.Printf("There are %d planets to explore.\n", planetarySystem.NumberOfPlanets())
 }
 
@@ -25,9 +29,9 @@ func printGreeting(name string) {
 }
 
 
-func travel(randomDestination bool) {
+func travel(randomDestination bool, planetarySystem PlanetarySystem) {
 	if (randomDestination) {
-		travelToPlanet("")
+		travelToPlanet(selectRandPlanet(planetarySystem).Name)
 	} else {
 		travelToPlanet(responseToPrompt("Name the planet you would like to visit."))
 	}
@@ -49,16 +53,18 @@ func promptForRandomOrSpecificDestination(prompt string) bool {
 }
 
 func travelToPlanet(planetName string) {
-	if planetName == "" {
-		//This should actually generate a random planet name 
-		//but the solution is not complete
-		planetName = "Jupiter"
-	}
-
 	fmt.Printf("Traveling to %s...\n", planetName)
 	
 	//This should actually lookup the planet name in the options
 	//and print the prompt that goes with the given planet
 	//But this solution is not complete 
 	fmt.Printf("Arrived at %s. The large red spot appears ominous.\n", planetName)
+}
+
+func selectRandPlanet(ps PlanetarySystem) (planet Planet){
+	//select random planet
+	fmt.Println("Selecting a random planet...")
+	rand.Seed(time.Now().Unix()) // initialize global pseudo random generator
+	planet = ps.Planets[rand.Intn(ps.NumberOfPlanets())]
+	return
 }
